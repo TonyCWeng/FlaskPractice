@@ -1,4 +1,4 @@
-# Ignore vscode settings folder
+# Ignore vscode workspace settings
 .vscode/*
 
 # Byte-compiled / optimized / DLL files
