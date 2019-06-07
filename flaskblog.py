@@ -15,6 +15,7 @@ class User(db.Model):
     image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
     # Backref allows us to access the user by calling post.author
+    # Lazy=True means that it won't be queried until needed.
     posts = db.relationship('Post', backref='author', lazy=True)
 
     def __repr__(self):
