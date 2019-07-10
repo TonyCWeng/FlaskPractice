@@ -70,11 +70,16 @@ def logout():
     return redirect(url_for('home'))
 
 
+def save_image_file(form_image):
+    
+
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        if form.image_file.data:
+
         current_user.username = form.username.data
         current_user.email = form.email.data
         db.session.commit()
@@ -83,6 +88,10 @@ def account():
         # refreshing the page would cause a resubmission of the same successful
         # post request unless we finish our submission with a redirect to a get request.
         return redirect(url_for('account'))
+    # Pre-populate form with user's current username and email
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
     image_file = url_for('static', filename=f'profile_images/{current_user.image_file}' )
     return render_template('account.html', title='My Account', 
                             image_file=image_file, 
